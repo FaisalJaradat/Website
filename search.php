@@ -1,24 +1,17 @@
 <html>
-	<head>
-    <title> Jist</title>
-    <link rel="icon" type="image/jpg" href="https://pbs.twimg.com/profile_images/799305782441496576/qzEhaGIL.jpg"/>
-<style>
-.center{
-  text-align: center;
-}
-h1{
-  text-align: center;
-  font-size: 40px;
-}h2{
-  text-align: left;
-  font-size: 10px;
-}
+		<head>
+	<style>
 
- </style>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	.Table{
+		text-align: center;
+	}
+
+	</style>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	</head>
 	<body>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
@@ -34,7 +27,7 @@ $(document).ready(function() {
 
 
 
-    <nav class="navbar navbar-inverse">
+		<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header active">
@@ -81,64 +74,63 @@ $(document).ready(function() {
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-    
-	<?php
+<?php
 
-	require("common.php"); 
+		require("common.php"); 
 		$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
 		if(empty($_SESSION['user'])) { 
   
 			// If they are not, we redirect them to the login page. 
 			$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
+
 			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
 			//exit;
          
         	// Remember that this die statement is absolutely critical.  Without it, 
         	// people can view your members-only content without logging in. 
         	die("Redirecting to login.php"); 
-    } 
-  ?>
+        }
 
-	</body>
-
-<?php
-
-  
+        	$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
+        	
 
 
+        	$searchkey = $_SESSION['$searchkey'];
+			$searchkey= $_POST['Searchq'];
 
-$arr = array_values($_SESSION['user']);
-    echo "<h1> Welcome to " . $arr[1] ."'s Profile" ;
-    echo "! </h1>";
+	$query2 = "SELECT * FROM Poopypantsdb.Tweets WHERE Message LIKE '%$searchkey%' OR User_name LIKE '%$searchkey%'";
+	
 
-
-
-    echo " $arr[1]" ."'s recent Posts ";
-$query = "SELECT * FROM Poopypantsdb.Tweets WHERE User_name ='$arr[1]'";
-
-
-       
+ 	  
+ 	 	
+ 
     // execute query
-    $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysqli_error());
+  	$result2 = mysqli_query($connection,$query2) or die ("Error in query: $query2 ".mysqli_error());
+  	  
 
     // see if any rows were returned
-    if (mysqli_num_rows($result) > 0) {
+		
+
+   	 if (mysqli_num_rows($result2) > 0) {
+		
 
 
 
         // print them one after another
         echo "<div class= 'Table'>";
-        echo "<table cellpadding=10 border=1>";
-        while($row = mysqli_fetch_row($result)) {
+        echo "<table cellpadding=10 border=1 align= 'center'>";
+        while($row = mysqli_fetch_row($result2)) {
+   	 	
             echo "<tr>";
             echo "<td length= 200 width = 50>" . $row[1]."</td>";
             echo "<td>".$row[2]."</td>";
-            echo "<td><a href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
+
             echo "</tr>";
-        }
-        echo "</table>";
-      echo "</div>";
-    } else {
+		}
+     	
+            echo "</table>";
+            echo "</div>";
+        } else {
       
         
         // print status message
@@ -146,26 +138,8 @@ $query = "SELECT * FROM Poopypantsdb.Tweets WHERE User_name ='$arr[1]'";
           echo "No messages found!";
     }
 
-
-    if (isset($_GET['id'])) {
-
-      // create query to delete record
-       echo $_SERVER['PHP_SELF'];
-          $query = "DELETE FROM testdb.Tweets WHERE id = ".$_GET['id'];
-
-      // run the query
-         $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
-      
-      // reset the url to remove id $_GET variable
-       $location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-       echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-       exit;
-     }
-?>
-
- 
-
-
+     
+  ?>
 
 
 </html>

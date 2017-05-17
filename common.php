@@ -6,6 +6,7 @@
     $host = "localhost"; 
     $dbname = "Poopypantsdb"; 
      
+
     // A try/catch statement is a common method of error handling in object oriented code. 
     // First, PHP executes the code within the try block.  If at any time it encounters an 
     // error while executing that code, it stops immediately and jumps down to the 
@@ -44,6 +45,7 @@
     // note that in most cases sessions do still use cookies and require the visitor 
     // to have cookies enabled.  For more information about sessions: 
     // http://us.php.net/manual/en/book.session.php 
+     
     session_start(); 
 
     // Note that it is a good practice to NOT end your PHP files with a closing PHP tag. 

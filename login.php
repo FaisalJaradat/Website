@@ -1,5 +1,57 @@
+<?php
+
+session_start();
+?>
+
+
+
+
+
+
+<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>      
+  <style>
+  html{
+background-image: url("https://s-media-cache-ak0.pinimg.com/originals/e2/71/fd/e271fda72f1e158b5f0569cc72d36d7f.jpg");
+background-size: 1500px, 1200px;
+background-repeat: no-repeat;
+  }header{
+    background-color: black;
+  }
+  
+
+  
+
+
+
+
+  </style>
+<header>
+
+</header>
+
 <?php 
 
+
+function redirect_to($location)
+{
+    if (!headers_sent($file, $line))
+    {
+        header("Location: " . $location);
+    } else {
+        printf("<script>location.href='%s';</script>", urlencode($location));
+        # or deal with the problem
+    }
+    printf('<a href="%s">Moved</a>', urlencode($location));
+    exit;
+}
 
     // First we execute our common code to connection to the database and start the session 
     require("common.php"); 
@@ -90,13 +142,16 @@
             $_SESSION['user'] = $row; 
              
             // Redirect the user to the private members-only page. 
-            header("Location: edit.php"); 
+            //header("Location: edit.php"); 
+            redirect_to("edit.php");
             die("Redirecting to: edit.php"); 
         } 
         else 
         { 
             // Tell the user they failed 
-            print("Login Failed."); 
+            echo "<script>Materialize.toast('I am a toast!', 4000);</script>";
+            //print("Login Failed."); 
+            
              
             // Show them their username again so all they have to do is enter a new 
             // password.  The use of htmlentities prevents XSS attacks.  You should 
@@ -108,6 +163,7 @@
     } 
      
 ?> 
+<div class="container">
 <h1>Login</h1> 
 <form action="login.php" method="post"> 
     Username:<br /> 
@@ -116,7 +172,7 @@
     Password:<br /> 
     <input type="password" name="password" value="" /> 
     <br /><br /> 
-    <input type="submit" value="Login" /> 
+    <input class="waves-effect waves-light btn" type="submit" value="Login" /> 
 </form> 
 <a href="register.php">Register</a>
-
+</div>

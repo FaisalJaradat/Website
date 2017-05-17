@@ -1,22 +1,71 @@
 <html>
-<head>
-	<style>
 
-	.Table{
-		text-align: center;
-	} .center {
+<head>
+  <style>
+  h1{
+    padding-top: 0px;
+  }
+
+    .post {
+      border: 1px solid #ddd;
+      border-radius: 2px;
+      text-align: center;
+      margin: auto;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      width: 50%;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      background: lightgray;
+      font-family: Tahoma;
+      padding-top: 1px;
+      z-index: 100;
+    }
+
+
+  .Table{
+    text-align: center;
+  } .center {
        position: absolute;
        left: 0%;
        top: 100%;
     
   
+}.animate {
+    -webkit-animation: animate_bg 20s;
+    animation: animate_bg 20s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
 }
 
-	</style>
+@keyframes animate_bg {
+    0%   {background:red;}
+    20%  {background:orange;}
+    40%  {background:red;}
+    60%  {background:green;}
+    80%  {background:blue;}
+    100% {background:red;}
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	</head>
-	<body>
+}
+
+@-webkit-keyframes animate_bg {
+     0%   {background:red;}
+    20%  {background:orange;}
+    40%  {background:red;}
+    60%  {background:green;}
+    80%  {background:blue;}
+    100% {background:red;}
+}
+
+
+  </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> 
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css"> -->
+
+  </head>
+  <body class=animate>
  <!-- Include all compiled plugins (below), or include individual files as needed -->
 
 
@@ -36,7 +85,7 @@ $(document).ready(function() {
 
 
 
-		<nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-fixed-top" style="background-color:darkblue;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header active">
@@ -77,6 +126,7 @@ $(document).ready(function() {
       </form>
 
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"> <?php echo "hi".$arr[1]; ?></a></li>
         <li action="logout.php" method="post"><a href="logout.php" ><button class= "btn btn-default" method="post">Logout</button></a></li>
 
       </ul>
@@ -88,7 +138,7 @@ $(document).ready(function() {
 echo $output;
 ?>
 
-	<?php
+  <?php
     $_SESSION['$searchkey'] = $_POST['Searchq'];
 /*if(isset($_POST['search'])){
     $searchkey= $_POST['search'];
@@ -117,135 +167,183 @@ echo $output;
 
 
 
-	    // pass in some info;
-		require("common.php"); 
-		
-		if(empty($_SESSION['user'])) { 
+      // pass in some info;
+    require("common.php"); 
+    
+    if( empty($_SESSION['user'])) { 
   
-			// If they are not, we redirect them to the login page. 
-			$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
-			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-			//exit;
+      // If they are not, we redirect them to the login page. 
+      $location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
+      echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+      //exit;
          
-        	// Remember that this die statement is absolutely critical.  Without it, 
-        	// people can view your members-only content without logging in. 
-        	die("Redirecting to login.php"); 
-    	} 
-		
-		// To access $_SESSION['user'] values put in an array, show user his username
-		$arr = array_values($_SESSION['user']);
+          // Remember that this die statement is absolutely critical.  Without it, 
+          // people can view your members-only content without logging in. 
+          die("Redirecting to login.php"); 
+      } 
+    
+    // To access $_SESSION['user'] values put in an array, show user his username
+    $arr = array_values($_SESSION['user']);
         echo "<div style ='text-align:center'>";
         echo "<h1 style='font-family:Tahoma'>";
-		  echo "Welcome " . $arr[1] ;
- 		 echo "!";
+      echo "Welcome " . $arr[1] ; 
+
+
+
+
+     echo "!";
          echo "</h1>";
-		  // open connection
-		  $connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
+         ?>
 
- 		 /* $query2 = "SELECT * FROM Tweets"
 
- 		 $result2 = mysqli_query($connection,$query2) or die ("Error in query: $query. ".mysql_error());
 
- 		 if (mysqli_num_rows($result2) >= 0) {
+      <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+        <input type="text" name="Message" placeholder= "Type a message...">
+           <input type="submit" name="submit">
+         </form>
+      <?php
 
- 			echo "<table cellpadding= 10 border= 1>";
- 			
- 		 }
-			echo "</table>";
-		  )else {
-	       echo "<alert> oh no!</alert>"
-		  }
-		  */
- 		
+      // open connection
+      $connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
+
+     /* $query2 = "SELECT * FROM Tweets"
+
+     $result2 = mysqli_query($connection,$query2) or die ("Error in query: $query. ".mysql_error());
+
+     if (mysqli_num_rows($result2) >= 0) {
+
+      echo "<table cellpadding= 10 border= 1>";
+      
+     }
+      echo "</table>";
+      )else {
+         echo "<alert> oh no!</alert>"
+      }
+      */
+    
  
 
 
 
 
 
-		  // select database
-		  mysqli_select_db($connection, $dbname) or die ("Unable to select database!");
+      // select database
+      mysqli_select_db($connection, $dbname) or die ("Unable to select database!");
 
-		  // create query
-		  $query = "SELECT * FROM Tweets";
+      // create query
+      $query = "SELECT * FROM Tweets";
          
-		  // execute query
-		  $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysql_error());
+    /*  // execute query
+      $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysql_error());
 
-	       	// see if any rows were returned
-		  if (mysqli_num_rows($result) > 0) {
+          // see if any rows were returned
+      if (mysqli_num_rows($result) > 0) {
 
-    		  // print them one after another
-    		  echo "<div class= 'Table'>";
-    		  echo "<table cellpadding=10 border=1 align='center'>";
-    		  while($row = mysqli_fetch_row($result)) {
-        	   	   echo "<tr>";
-        		  echo "<td length= 200 width = 50> <a name='userpage' href='user.php/$row[1]'> ". $row[1]."</a></td>";
+          // print them one after another
+          echo "<div class= 'Table' >";
+          echo "<table cellpadding=10 border=1 align='center' class='container'>";
+          while($row = mysqli_fetch_row($result)) {
+                 echo "<tr>";
+              echo "<td length= 200 width = 50> <a name='userpage' href='user.php?u=$row[1]'> ". $row[1]."</a></td>";
                     if(userpage == true){
                         $_SESSION['userpage']=$row[1];
                     } 
-        		  echo "<td>".$row[2]."</td>";
-				  //echo "<td><a href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
+              echo "<td>".$row[2]."</td>";
+          //echo "<td><a href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
                   echo "<td> <a href='google.com'> like </td>";
-        		  echo "</tr>";
-    		  }
-		      echo "</table>";
-			 echo "</div>";
-		      } else {
-			
-    		
-    		// print status message
-    		echo "</br>";
-       		echo "No messages found!";
-		  }
+              echo "</tr>";
+          }
+          echo "</table>";
+       echo "</div>";
+          } else {
+      
+        
+        // print status message
+        echo "</br>";
+          echo "No messages found!";
+      }*/
+ $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysql_error());
+unset($row['id']);
+   if(mysqli_num_rows($result)>0)
+    {
+      while($row = mysqli_fetch_row($result)){
+        for ($count=0; $count < mysqli_num_rows($result)/mysqli_num_rows($result); $count++) { 
+         // echo "<table align='center' class='container-fluid' border='1' cellpadding='10'>";
+         
+         // echo "<tr>";
+         // echo "<td width='1000' bgcolor='lightblue'><h3>" .$row[1]."</h3>".$row[2]."</td>";
 
-		  // free result set memory
-		  mysqli_free_result($connection,$result);
 
-		  // set variable values to HTML form inputs
-		  $country = $_POST['country'];
-    	   $animal = $_POST['animal'];
-    	   $tweets = $_POST['Message'];
-    	   $User_name = $_POST['User_name'];
-		
-		  // check to see if user has entered anything
-		      if ($tweets != "") {
-	 	 	// build SQL query
-			 $query = "INSERT INTO Tweets (User_name, Message) VALUES ('$arr[1]', '$tweets')";
-			// run the query
-     		 $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
-			// refresh the page to show new update
-	 		    echo "<meta http-equiv='refresh' content='0'>";
-		   }
-		
-		  // if DELETE pressed, set an id, if id is set then delete it from DB
-		      if (isset($_GET['id'])) {
 
-			// create query to delete record
-			 echo $_SERVER['PHP_SELF'];
-    		  $query = "DELETE FROM Tweets WHERE id = ".$_GET['id'];
+         // echo "</tr>";
 
-			// run the query
-     		 $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
-			
-			// reset the url to remove id $_GET variable
-			 $location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-			 echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-			 exit;
-			
-		  }
-		
-		  // close connection
-		  mysqli_close($connection);
+         // echo "</table>";
+         // echo" <br>";
+         // echo "<br>";
+          echo "<div class='post'><h3>".$row[1]."</h3></br></br>".$row[2]."</div>";
 
-	       ?>
+        }
+
+
+        }
+
+
+
+
+      }else{
+
+      } 
+
+
+
+
+
+      // free result set memory
+      mysqli_free_result($connection,$result);
+
+      // set variable values to HTML form inputs
+      $country = $_POST['country'];
+         $animal = $_POST['animal'];
+         $tweets = $_POST['Message'];
+         $User_name = $_POST['User_name'];
+    
+      // check to see if user has entered anything
+          if ($tweets != "") {
+      // build SQL query
+       $query = "INSERT INTO Tweets (User_name, Message) VALUES ('$arr[1]', '$tweets')";
+      // run the query
+         $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+      // refresh the page to show new update
+          echo "<meta http-equiv='refresh' content='0'>";
+       }
+    
+      // if DELETE pressed, set an id, if id is set then delete it from DB
+          if (isset($_GET['id'])) {
+
+      // create query to delete record
+       echo $_SERVER['PHP_SELF'];
+          $query = "DELETE FROM Tweets WHERE id = ".$_GET['id'];
+
+      // run the query
+         $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+      
+      // reset the url to remove id $_GET variable
+       $location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+       echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+       exit;
+      
+      }
+    
+      // close connection
+      mysqli_close($connection);
+
+         ?>
     
             <!-- This is the HTML form that appears in the browser -->
-   	        <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-    	  <input type="text" name="Message" placeholder= "Type a message...">
-           <input type="submit" name="submit">
-         </form>
+            
+        
+        </body>
         </div>
-   
-	   </body>
+
+
 </html>

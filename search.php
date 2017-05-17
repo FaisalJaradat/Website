@@ -95,7 +95,7 @@ $(document).ready(function() {
         	
 
 
-        	$searchkey = $_SESSION['$searchkey'];
+          $searchkey = $_SESSION['$searchkey'];
 			$searchkey= $_POST['Searchq'];
 
 	$query2 = "SELECT * FROM Poopypantsdb.Tweets WHERE Message LIKE '%$searchkey%' OR User_name LIKE '%$searchkey%'";

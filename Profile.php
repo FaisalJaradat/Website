@@ -110,8 +110,19 @@ $(document).ready(function() {
 $arr = array_values($_SESSION['user']);
     echo "<h1> Welcome to " . $arr[1] ."'s Profile" ;
     echo "! </h1>";
-
-
+?>
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="..." alt="...">
+      <div class="caption">
+        
+       
+      </div>
+    </div>
+  </div>
+</div>
+<?php 
 
     echo " $arr[1]" ."'s recent Posts ";
 $query = "SELECT * FROM Poopypantsdb.Tweets WHERE User_name ='$arr[1]'";
@@ -151,7 +162,7 @@ $query = "SELECT * FROM Poopypantsdb.Tweets WHERE User_name ='$arr[1]'";
 
       // create query to delete record
        echo $_SERVER['PHP_SELF'];
-          $query = "DELETE FROM testdb.Tweets WHERE id = ".$_GET['id'];
+          $query = "DELETE FROM Poopypantsdb.Tweets WHERE id = ".$_GET['id'];
 
       // run the query
          $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());

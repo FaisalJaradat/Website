@@ -1,5 +1,34 @@
 <?php 
+    
+    session_start();
+?>
 
+
+<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>      
+  <style>
+  html{
+background-image: url("background.png");
+background-size: 1500px, 1200px;
+background-repeat: no-repeat;
+  }header{
+    background-color: black;
+  }
+  
+  
+  </style>
+<header>
+
+</header>
+
+<?php
     // First we execute our common code to connection to the database and start the session 
     require("common.php"); 
      

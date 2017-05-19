@@ -1,12 +1,30 @@
 <html>
-<style>html{
+<style>
+html{
 background-image: url("https://s-media-cache-ak0.pinimg.com/originals/e2/71/fd/e271fda72f1e158b5f0569cc72d36d7f.jpg");
 background-size: 1500px, 1200px;
 background-repeat: no-repeat;
 }</style>
 
 <?php 
+    
+    session_start();
+?>
 
+
+<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>      
+ 
+
+
+<?php
     // First we execute our common code to connection to the database and start the session 
     require("common.php"); 
      
@@ -236,10 +254,12 @@ die();
     Password:<br /> 
     <input type="password" name="password" value="" required/> 
     <br /><br /> 
-    <input type="submit" value="Register" class="waves-effect waves-light btn" /> 
+
+    <input type="submit" value="Register" class="waves-effect waves-light btn" style="vertical-align:middle;text-align:center;"/> 
 </form>
 <a href="login.php">Login</a>
 
 </div>
 
 </html>
+

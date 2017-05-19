@@ -4,7 +4,63 @@
 
 	.Table{
 		text-align: center;
-	}
+	}.post {
+      border: 1px solid #ddd;
+      border-radius: 2px;
+      text-align: center;
+      margin: auto;
+      margin-bottom: 0px;
+      margin-top: 0px;
+      width: 50%;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      background: lightgray;
+      font-family: Tahoma;
+      padding-top: 1px;
+      z-index: 100;
+      padding-left: 5px;
+    }.posttext{
+text-align: left;
+text-align top: 
+position : relative;
+top: -5px;
+}.postbottom{
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    text-align: left;
+    margin: auto;
+    margin-top:0px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    padding: 10px;
+    width:50%;
+    font-family: Tahoma;
+    background: lightgray;
+    
+  }.animate {
+    -webkit-animation: animate_bg 20s;
+    animation: animate_bg 20s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+}
+
+@keyframes animate_bg {
+      0%   {background:black;}
+    25%  {background:darkblue;}
+    50%  {background:black;}
+    75%  {background:darkblue;}
+    100%  {background:black;}
+}
+}
+
+@-webkit-keyframes animate_bg {
+     0%   {background:black;}
+    25%  {background:darkblue;}
+    50%  {background:black;}
+    75%  {background:darkblue;}
+    100%  {background:black;}
+}
 
 	</style>
 
@@ -20,14 +76,33 @@ $(document).ready(function() {
     $('dropdown-toggle').dropdown()
     });
 </script>
+<script type="text/javascript">
+    $('#box').focus(function()
+{ 
+$(this).animate({
+    width: '150px'
+  }, 500, function() {
+    // Animation complete.
+  });
+});
+
+
+$('#box').blur(function()
+{ 
+$(this).animate({
+     width: '100px'
+   }, 500, function() {
+     // Animation complete.
+   });
+ });
+</script>
 
 
 
 
 
 
-
-		<nav class="navbar navbar-inverse">
+		<nav class="navbar navbar-fixed-top animate" style="height:50px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header active">
@@ -68,12 +143,16 @@ $(document).ready(function() {
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-        <li action="logout.php" method="post"><a href="logout.php" ><button class= "btn btn-default" method="post">Logout</button></a></li>
+        <li><a href="#">Link</a></li>
+        <li action="logout.php" method="post" style="top:-8px;"><a href="logout.php" style="height:58px;"><button class= "btn btn-default" method="post" style="50px">Logout</button></a></li>
 
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<br>
+<br>
+<br>
 <?php
 
 		require("common.php"); 
@@ -95,10 +174,10 @@ $(document).ready(function() {
         	
 
 
-          $searchkey = $_SESSION['$searchkey'];
+         $searchkey = $_SESSION['$searchkey'];
 			$searchkey= $_POST['Searchq'];
 
-	$query2 = "SELECT * FROM Poopypantsdb.Tweets WHERE Message LIKE '%$searchkey%' OR User_name LIKE '%$searchkey%'";
+	$query2 = "SELECT * FROM Poopypantsdb.Tweets WHERE Message LIKE '%$searchkey%' OR User_name LIKE '%$searchkey%' OR Hashtag LIKE '%$searchkey%' ORDER BY ID DESC";
 	
 
  	  
@@ -113,30 +192,40 @@ $(document).ready(function() {
 
    	 if (mysqli_num_rows($result2) > 0) {
 		
-
-
-
-        // print them one after another
-        echo "<div class= 'Table'>";
-        echo "<table cellpadding=10 border=1 align= 'center'>";
-        while($row = mysqli_fetch_row($result2)) {
-   	 	
-            echo "<tr>";
-            echo "<td length= 200 width = 50>" . $row[1]."</td>";
-            echo "<td>".$row[2]."</td>";
-
-            echo "</tr>";
-		}
-     	
-            echo "</table>";
-            echo "</div>";
-        } else {
-      
+      while($row = mysqli_fetch_row($result2)){
         
-        // print status message
-        echo "</br>";
-          echo "No messages found!";
-    }
+        for ($count=0; $count < mysqli_num_rows($result2)/mysqli_num_rows($result2); $count++) { 
+         // echo "<table align='center' class='container-fluid' border='1' cellpadding='10'>";
+         
+         // echo "<tr>";
+         // echo "<td width='1000' bgcolor='lightblue'><h3>" .$row[1]."</h3>".$row[2]."</td>";
+
+
+
+         // echo "</tr>";
+
+         // echo "</table>";
+         // echo" <br>";
+         // echo "<br>";
+          echo "<div class='post'> 
+          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'> 
+          <p class='posttext'>
+          <div class='posttext'>".$row[1]."
+          </div>
+          </p>
+          </br>"
+          .$row[2].
+          "</div><div class='postbottom'> Tags: ".$row[3]."</div>"
+
+          ;
+
+        }
+
+
+        }
+      }else{
+        echo "No posts found!";
+      }
 
      
   ?>

@@ -1,8 +1,95 @@
+
+<?php
+
+
+
+ require("common.php"); 
+    
+    if(empty($_SESSION['user'])) { 
+  
+      // If they are not, we redirect them to the login page. 
+      $location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
+      echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+      //exit;
+         
+          // Remember that this die statement is absolutely critical.  Without it, 
+          // people can view your members-only content without logging in. 
+          die("Redirecting to login.php"); 
+      } 
+    
+    // To access $_SESSION['user'] values put in an array, show user his username
+
+      $arr = array_values($_SESSION['user']);
+
+
+
+
+
+?>
+
 <html>
 
+
+
 <head>
-  <style>
-  h1{
+  <style>.dontalign{
+    vertical-align: inherit;
+    height: 25px;
+  }
+  input {
+  display: inline-block; vertical-align: center; text-align: left;
+}
+
+  #Hashtag{
+ vertical-align: center;
+    width:250px;
+    height: 25px;
+    left:50%;
+
+
+  }
+
+
+  .postbottom{
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    text-align: left;
+    margin: auto;
+    margin-top:0px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    padding: 10px;
+    width:50%;
+    font-family: Tahoma;
+    background: lightgray;
+    
+  }
+    #box {
+      vertical-align: center;
+    width:250px;
+    height: 75px;
+    transition: 0.5s;
+}
+
+#box:focus {
+    width:300px;
+    height:100px;
+    transition: 0.5s;
+}
+
+
+  .btn{
+border-bottom: 18px;
+  }
+  .posttext{
+text-align: left;
+text-align top: 
+position : relative;
+top: -5px;
+
+  }p{
+
+    }h1{
     padding-top: 0px;
   }
 
@@ -11,8 +98,8 @@
       border-radius: 2px;
       text-align: center;
       margin: auto;
-      margin-bottom: 10px;
-      margin-top: 10px;
+      margin-bottom: 0px;
+      margin-top: 0px;
       width: 50%;
       border: 2px solid #ddd;
       border-radius: 5px;
@@ -21,6 +108,7 @@
       font-family: Tahoma;
       padding-top: 1px;
       z-index: 100;
+      padding-left: 5px;
     }
 
 
@@ -40,22 +128,20 @@
 }
 
 @keyframes animate_bg {
-    0%   {background:red;}
-    20%  {background:orange;}
-    40%  {background:red;}
-    60%  {background:green;}
-    80%  {background:blue;}
-    100% {background:red;}
-
+      0%   {background:black;}
+    25%  {background:darkblue;}
+    50%  {background:black;}
+    75%  {background:darkblue;}
+    100%  {background:black;}
+}
 }
 
 @-webkit-keyframes animate_bg {
-     0%   {background:red;}
-    20%  {background:orange;}
-    40%  {background:red;}
-    60%  {background:green;}
-    80%  {background:blue;}
-    100% {background:red;}
+     0%   {background:black;}
+    25%  {background:darkblue;}
+    50%  {background:black;}
+    75%  {background:darkblue;}
+    100%  {background:black;}
 }
 
 
@@ -65,12 +151,32 @@
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css"> -->
 
   </head>
-  <body class=animate>
+  <body >
  <!-- Include all compiled plugins (below), or include individual files as needed -->
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $('#box').focus(function()
+{ 
+$(this).animate({
+    width: '150px'
+  }, 500, function() {
+    // Animation complete.
+  });
+});
+
+
+$('#box').blur(function()
+{ 
+$(this).animate({
+     width: '100px'
+   }, 500, function() {
+     // Animation complete.
+   });
+ });
+</script>
 <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
 <script type="text/javascript">
@@ -85,7 +191,7 @@ $(document).ready(function() {
 
 
 
-    <nav class="navbar navbar-fixed-top" style="background-color:darkblue;">
+    <nav class="navbar navbar-fixed-top animate" style="height:50px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header active">
@@ -101,7 +207,7 @@ $(document).ready(function() {
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="http://localhost:8888/Profile.php">Profile <span class="sr-only">(current)</span></a></li>
+        <li ><a href="http://localhost:8888/Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
         <li><a href="#">Unsigned</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle center navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" > Dropdown <span class="caret"></span></a>
@@ -122,18 +228,21 @@ $(document).ready(function() {
         <div class="form-group">
           <input method= "post" action = "search.php" type="text" name="Searchq" class="form-control" placeholder="Search for messages...">
         </div>
-        <button name="buttoncheck" type="Submit" class="btn btn-default" method="post" ><a href="search.php">Submit</a></button>
+        <button name="buttoncheck" type="Submit" class="btn btn-default" method="post" value="Search" ><a href="search.php">Search</a></button>
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"> <?php echo "hi".$arr[1]; ?></a></li>
-        <li action="logout.php" method="post"><a href="logout.php" ><button class= "btn btn-default" method="post">Logout</button></a></li>
+        <li><a href="http://localhost:8888/Aboutus.php">About us</a></li>
+        <li action="logout.php" method="post" style="top:-8px;"><a href="logout.php" style="height:58px;"><button class= "btn btn-default" method="post" style="50px">Logout</button></a></li>
 
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-   
+   <br>
+   <br>
+   <br>
+
 <?php 
 echo $output;
 ?>
@@ -168,25 +277,10 @@ echo $output;
 
 
       // pass in some info;
-    require("common.php"); 
-    
-    if( empty($_SESSION['user'])) { 
-  
-      // If they are not, we redirect them to the login page. 
-      $location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
-      echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-      //exit;
-         
-          // Remember that this die statement is absolutely critical.  Without it, 
-          // people can view your members-only content without logging in. 
-          die("Redirecting to login.php"); 
-      } 
-    
-    // To access $_SESSION['user'] values put in an array, show user his username
-    $arr = array_values($_SESSION['user']);
+   
         echo "<div style ='text-align:center'>";
         echo "<h1 style='font-family:Tahoma'>";
-      echo "Welcome " . $arr[1] ; 
+      echo "Welcome " . $arr[1]; 
 
 
 
@@ -198,8 +292,12 @@ echo $output;
 
 
       <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-        <input type="text" name="Message" placeholder= "Type a message...">
-           <input type="submit" name="submit">
+        <input id="box"type="text" name="Message" placeholder= "Type a message..." required>
+                <br>
+                
+         <input id="Hashtag" type="text" name="Hashtag" Value="" Placeholder="Enter a Hashtag..." onkeydown=""return ValidateInput(this);>
+                <br>
+           <input id= "dontalign" type="submit" name="submit" value="Post">
          </form>
       <?php
 
@@ -231,7 +329,7 @@ echo $output;
       mysqli_select_db($connection, $dbname) or die ("Unable to select database!");
 
       // create query
-      $query = "SELECT * FROM Tweets";
+      $query = "SELECT * FROM Poopypantsdb.Tweets ORDER BY id DESC";
          
     /*  // execute query
       $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysql_error());
@@ -263,7 +361,7 @@ echo $output;
           echo "No messages found!";
       }*/
  $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysql_error());
-unset($row['id']);
+
    if(mysqli_num_rows($result)>0)
     {
       while($row = mysqli_fetch_row($result)){
@@ -280,7 +378,18 @@ unset($row['id']);
          // echo "</table>";
          // echo" <br>";
          // echo "<br>";
-          echo "<div class='post'><h3>".$row[1]."</h3></br></br>".$row[2]."</div>";
+          echo "<div class='post'> 
+          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'> 
+          <p class='posttext'>
+          <div class='posttext'><a name='userpage' href='user.php?u=$row[1]'>".$row[1]."</a>";
+          if(userpage == true){
+                        $_SESSION['userpage']=$row[1];
+                      }
+          echo "</div>
+          </p>
+          </br>"
+          .$row[2].
+          "</div><div class='postbottom'> Tags: #". convertHashtags($row[3]) ."</div>";
 
         }
 
@@ -294,8 +403,13 @@ unset($row['id']);
 
       } 
 
+function convertHashtags($str){
+  $regex = "/[#]/";
+  $str = preg_replace($regex, '', $str);
 
 
+  return($str);
+}
 
 
       // free result set memory
@@ -306,11 +420,12 @@ unset($row['id']);
          $animal = $_POST['animal'];
          $tweets = $_POST['Message'];
          $User_name = $_POST['User_name'];
+         $Hashtags =$_POST['Hashtag'];
     
       // check to see if user has entered anything
           if ($tweets != "") {
       // build SQL query
-       $query = "INSERT INTO Tweets (User_name, Message) VALUES ('$arr[1]', '$tweets')";
+       $query = "INSERT INTO Tweets (User_name, Message, Hashtag) VALUES ('$arr[1]', '$tweets','$Hashtags')";
       // run the query
          $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
       // refresh the page to show new update

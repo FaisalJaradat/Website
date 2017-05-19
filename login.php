@@ -67,7 +67,7 @@ function redirect_to($location)
     { 
         // This query retreives the user's information from the database using 
         // their username. 
-        $query = " 
+        $query = "
             SELECT 
                 id, 
                 username, 
@@ -105,6 +105,7 @@ function redirect_to($location)
         // Retrieve the user data from the database.  If $row is false, then the username 
         // they entered is not registered. 
         $row = $stmt->fetch(); 
+        
         if($row) 
         { 
             // Using the password submitted by the user and the salt stored in the database, 
@@ -145,6 +146,7 @@ function redirect_to($location)
             //header("Location: edit.php"); 
             redirect_to("edit.php");
             die("Redirecting to: edit.php"); 
+
         } 
         else 
         { 

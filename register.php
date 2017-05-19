@@ -1,3 +1,10 @@
+<html>
+<style>html{
+background-image: url("https://s-media-cache-ak0.pinimg.com/originals/e2/71/fd/e271fda72f1e158b5f0569cc72d36d7f.jpg");
+background-size: 1500px, 1200px;
+background-repeat: no-repeat;
+}</style>
+
 <?php 
 
     // First we execute our common code to connection to the database and start the session 
@@ -14,13 +21,17 @@
             // like this.  It is much better to display the error with the form 
             // and allow the user to correct their mistake.  However, that is an 
             // exercise for you to implement yourself. 
-            die("Please enter a username."); 
+            echo("Please enter a username."); 
+                echo "<meta http-equiv='refresh' content='0;url=register.php' />";
+                die();
         } 
          
         // Ensure that the user has entered a non-empty password 
         if(empty($_POST['password'])) 
         { 
-            die("Please enter a password."); 
+            echo("Please enter a password."); 
+              echo "<meta http-equiv='refresh' content='3';url='register.php'>";
+              die();
         } 
          
         // Make sure the user entered a valid E-Mail address 
@@ -29,7 +40,9 @@
         // http://us.php.net/manual/en/filter.filters.php 
         if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 
         { 
-            die("Invalid E-Mail Address"); 
+            echo ("Invalid E-Mail Address"); 
+            echo "<meta http-equiv='refresh' content='3';url='register.php'>";
+            die();
         } 
          
         // We will use this SQL query to see whether the username entered by the 
@@ -65,7 +78,9 @@
         { 
             // Note: On a production website, you should not output $ex->getMessage(). 
             // It may provide an attacker with helpful information about your code.  
-            die("Failed to run query: " . $ex->getMessage()); 
+           echo("Oopsie! Something went wrong!"); 
+             echo "<meta http-equiv='refresh' content='3';url='register.php'>";
+             die();
         } 
          
         // The fetch() method returns an array representing the "next" row from 
@@ -76,7 +91,10 @@
         // the database already and we should not allow the user to continue. 
         if($row) 
         { 
-            die("This username is already in use"); 
+            echo("This username is already in use"); 
+            
+             echo "<meta http-equiv='refresh' content='3';url='register.php'>";
+die();
         } 
          
         // Now we perform the same type of check for the email address, in order 
@@ -100,14 +118,19 @@
         } 
         catch(PDOException $ex) 
         { 
-            die("Failed to run query: " . $ex->getMessage()); 
+            echo"Oopsie! Something went wrong!"; 
+              echo "<meta http-equiv='refresh' content='3';url='register.php'>";
+              die();
         } 
          
         $row = $stmt->fetch(); 
          
         if($row) 
         { 
-            die("This email address is already registered"); 
+
+            echo " Email already in use!";
+             echo "<meta http-equiv='refresh' content='3';url='register.php'>";
+             die();
         } 
          
         // An INSERT query is used to add new rows to a database table. 
@@ -174,7 +197,7 @@
         { 
             // Note: On a production website, you should not output $ex->getMessage(). 
             // It may provide an attacker with helpful information about your code.  
-            die("Failed to run query: " . $ex->getMessage()); 
+            die("Oopsie, something went wrong!");
         } 
          
         // This redirects the user back to the login page after they register 
@@ -187,16 +210,36 @@
     } 
      
 ?> 
+
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>      
+  
+
+
+<div class='container'>
 <h1>Register</h1> 
 <form action="register.php" method="post"> 
     Username:<br /> 
-    <input type="text" name="username" value="" /> 
+    <input type="text" name="username" value="" required/> 
     <br /><br /> 
     E-Mail:<br /> 
-    <input type="text" name="email" value="" /> 
+    <input type="text" name="email" value="" required/> 
     <br /><br /> 
     Password:<br /> 
-    <input type="password" name="password" value="" /> 
+    <input type="password" name="password" value="" required/> 
     <br /><br /> 
-    <input type="submit" value="Register" /> 
+    <input type="submit" value="Register" class="waves-effect waves-light btn" /> 
 </form>
+<a href="login.php">Login</a>
+
+</div>
+
+</html>

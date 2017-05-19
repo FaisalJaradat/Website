@@ -1,7 +1,137 @@
+<?php
+
+
+;?>
+		<?php
+			require("common.php"); 
+			$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
+			if(empty($_SESSION['user'])) { 
+  	
+				// If they are not, we redirect them to the login page. 
+				$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
+
+				echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+				//exit;
+         	
+        		// Remember that this die statement is absolutely critical.  Without it, 
+        		// people can view your members-only content without logging in. 
+        		die("Redirecting to login.php"); 
+      	 	}
+
+      	?>	
+
+
 <html>
 
 	<head>
+<style >.addfriend{
 
+float:right; 
+position: relative; 
+top: -40px; 
+left: -30px;
+border-radius: 5px;
+-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+
+
+}.addfriend span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.addfriend span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.addfriend:hover span {
+  padding-right: 15px;
+}
+
+.addfriend:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+.Profile{
+top: -10px;
+height: 100px;
+border: 5px outset;
+border-color: darkblue;
+position: relative;
+
+}.post {
+      border: 1px solid #ddd;
+      border-radius: 2px;
+      text-align: center;
+      margin: auto;
+      margin-bottom: 0px;
+      margin-top: 0px;
+      width: 50%;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      background: lightgray;
+      font-family: Tahoma;
+      padding-top: 1px;
+      z-index: 100;
+      padding-left: 5px;
+    }.posttext{
+text-align: left;
+text-align top: 
+position : relative;
+top: -5px;
+}.postbottom{
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    text-align: left;
+    margin: auto;
+    margin-top:0px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    padding: 10px;
+    width:50%;
+    font-family: Tahoma;
+    background: lightgray;
+    
+  }.animate {
+    -webkit-animation: animate_bg 20s;
+    animation: animate_bg 20s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+}
+
+@keyframes animate_bg {
+      0%   {background:black;}
+    25%  {background:darkblue;}
+    50%  {background:black;}
+    75%  {background:darkblue;}
+    100%  {background:black;}
+}
+}
+
+@-webkit-keyframes animate_bg {
+     0%   {background:black;}
+    25%  {background:darkblue;}
+    50%  {background:black;}
+    75%  {background:darkblue;}
+    100%  {background:black;}
+}.center{
+	text-align: center;
+}
+
+
+
+
+</style>
 
 
 
@@ -24,13 +154,39 @@ $(document).ready(function() {
     });
 </script>
 
+<script type="text/javascript">
+    $('#box').focus(function()
+{ 
+$(this).animate({
+    width: '150px'
+  }, 500, function() {
+    // Animation complete.
+  });
+});
+
+
+$('#box').blur(function()
+{ 
+$(this).animate({
+     width: '100px'
+   }, 500, function() {
+     // Animation complete.
+   });
+ });
+</script>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('dropdown-toggle').dropdown()
+    });
+</script>
 
 
 
 
 
-
-		<nav class="navbar navbar-inverse">
+		 <nav class="navbar navbar-fixed-top animate" style="height:50px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header active">
@@ -46,7 +202,7 @@ $(document).ready(function() {
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="http://localhost:8888/Profile.php">Profile <span class="sr-only">(current)</span></a></li>
+        <li ><a href="http://localhost:8888/Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
         <li><a href="#">Unsigned</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle center navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" > Dropdown <span class="caret"></span></a>
@@ -67,16 +223,20 @@ $(document).ready(function() {
         <div class="form-group">
           <input method= "post" action = "search.php" type="text" name="Searchq" class="form-control" placeholder="Search for messages...">
         </div>
-        <button name="buttoncheck" type="Submit" class="btn btn-default" method="post" ><a href="search.php">Submit</a></button>
+        <button name="buttoncheck" type="Submit" class="btn btn-default" method="post" value="Search" ><a href="search.php">Search</a></button>
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-        <li action="logout.php" method="post"><a href="logout.php" ><button class= "btn btn-default" method="post">Logout</button></a></li>
+        <li><a href="http://localhost:8888/Aboutus.php">About us</a></li>
+        <li action="logout.php" method="post" style="top:-8px;"><a href="logout.php" style="height:58px;"><button class= "btn btn-default" method="post" style="50px">Logout</button></a></li>
 
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+   <br>
+   <br>
+   <br>
 
 
 
@@ -92,17 +252,62 @@ $(document).ready(function() {
 
 	<body>
 
+
+  
+<div class="Profile">
 <?php
+echo "<img src='https://ukla.org/images/icons/user-icon.svg' width= '86' height='100' align='left' style='position : absolute; top: -4px; left: 3px;''> ";
 		$userpage = $_GET['u'];
-		echo "<h1>Welcome to "; 
+		echo "<h1 class='center'>Welcome to "; 
 		echo $userpage;
-		echo "'s profile!</h1>";
+		echo "'s Profile!</h1>";
+		echo "<button class= 'addfriend' style=''> <span> <a href=user.php?accept=" . '$_row[id]' . "> add friend </a></span></button>";
+		echo "</div>";
+
+
+$query = "SELECT * FROM Poopypantsdb.Tweets WHERE User_name ='$_GET[u]'";
+ $result = mysqli_query($connection,$query) or die ("Error in query: $query ".mysqli_error());
+if(mysqli_num_rows($result)>0)
+    {
+      while($row = mysqli_fetch_row($result)){
+        for ($count=0; $count < mysqli_num_rows($result)/mysqli_num_rows($result); $count++) { 
+         // echo "<table align='center' class='container-fluid' border='1' cellpadding='10'>";
+         
+         // echo "<tr>";
+         // echo "<td width='1000' bgcolor='lightblue'><h3>" .$row[1]."</h3>".$row[2]."</td>";
+
+
+
+         // echo "</tr>";
+
+         // echo "</table>";
+         // echo" <br>";
+         // echo "<br>";
+          echo "<div class='post'> 
+          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'> 
+          <p class='posttext'>
+          <div class='posttext'>".$row[1]." "; ?> 
+          	<?php
+       echo"   </div>
+          </p>
+          </br>"
+          .$row[2].
+          "</div><div class='postbottom'> Tags: ".$row[3]."</div>";
+
+          ;
+
+        }
+
+
+        }
 
 
 
 
+      }
 
-		if 
+
+
 		
 
 
@@ -112,23 +317,6 @@ $(document).ready(function() {
 
 
 
-		<?php
-			require("common.php"); 
-			$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
-			if(empty($_SESSION['user'])) { 
-  	
-				// If they are not, we redirect them to the login page. 
-				$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
-
-				echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-				//exit;
-         	
-        		// Remember that this die statement is absolutely critical.  Without it, 
-        		// people can view your members-only content without logging in. 
-        		die("Redirecting to login.php"); 
-      	 	}
-
-      	?>	
 
 
 
@@ -149,6 +337,6 @@ $(document).ready(function() {
 
 
 	</body>
-
-
-</html>
+	
+	
+	</html>

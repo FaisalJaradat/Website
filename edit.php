@@ -3,20 +3,20 @@
 
 
 
- require("common.php"); 
-    
-    if(empty($_SESSION['user'])) { 
-  
-      // If they are not, we redirect them to the login page. 
+ require("common.php");
+
+    if(empty($_SESSION['user'])) {
+
+      // If they are not, we redirect them to the login page.
       $location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
       echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
       //exit;
-         
-          // Remember that this die statement is absolutely critical.  Without it, 
-          // people can view your members-only content without logging in. 
-          die("Redirecting to login.php"); 
-      } 
-    
+
+          // Remember that this die statement is absolutely critical.  Without it,
+          // people can view your members-only content without logging in.
+          die("Redirecting to login.php");
+      }
+
     // To access $_SESSION['user'] values put in an array, show user his username
 
       $arr = array_values($_SESSION['user']);
@@ -62,7 +62,7 @@
     width:50%;
     font-family: Tahoma;
     background: lightgray;
-    
+
   }
     #box {
       vertical-align: center;
@@ -72,6 +72,7 @@
 }
 
 #box:focus {
+    max-width: 300px;
     width:300px;
     height:100px;
     transition: 0.5s;
@@ -83,7 +84,7 @@ border-bottom: 18px;
   }
   .posttext{
 text-align: left;
-text-align top: 
+text-align top:
 position : relative;
 top: -5px;
 
@@ -118,8 +119,8 @@ top: -5px;
        position: absolute;
        left: 0%;
        top: 100%;
-    
-  
+
+
 }.animate {
     -webkit-animation: animate_bg 20s;
     animation: animate_bg 20s;
@@ -146,7 +147,7 @@ top: -5px;
 
 
   </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css"> -->
 
@@ -159,7 +160,7 @@ top: -5px;
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $('#box').focus(function()
-{ 
+{
 $(this).animate({
     width: '150px'
   }, 500, function() {
@@ -169,7 +170,7 @@ $(this).animate({
 
 
 $('#box').blur(function()
-{ 
+{
 $(this).animate({
      width: '100px'
    }, 500, function() {
@@ -208,8 +209,8 @@ $(document).ready(function() {
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li ><a href="http://localhost:8888/Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Unsigned</a></li>
-        <li class="dropdown">
+
+        <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle center navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" > Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li class="dropdown-menu" aria-labelledby="dropdownMenu3"><a href="#"></a> hi</li>
@@ -218,12 +219,12 @@ $(document).ready(function() {
             <li role="separator" class="divider"></li>
             <li><a href="#">Separated link</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+            <li><a href="#">One more separated link</a></li> -->
           </ul>
         </li>
       </ul>
       <form class="navbar-form navbar-left" method="post" action="search.php">
-      
+
 
         <div class="form-group">
           <input method= "post" action = "search.php" type="text" name="Searchq" class="form-control" placeholder="Search for messages...">
@@ -243,7 +244,7 @@ $(document).ready(function() {
    <br>
    <br>
 
-<?php 
+<?php
 echo $output;
 ?>
 
@@ -277,10 +278,10 @@ echo $output;
 
 
       // pass in some info;
-   
+
         echo "<div style ='text-align:center'>";
         echo "<h1 style='font-family:Tahoma'>";
-      echo "Welcome " . $arr[1]; 
+      echo "Welcome " . $arr[1];
 
 
 
@@ -294,7 +295,7 @@ echo $output;
       <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
         <input id="box"type="text" name="Message" placeholder= "Type a message..." required>
                 <br>
-                
+
          <input id="Hashtag" type="text" name="Hashtag" Value="" Placeholder="Enter a Hashtag..." onkeydown=""return ValidateInput(this);>
                 <br>
            <input id= "dontalign" type="submit" name="submit" value="Post">
@@ -311,15 +312,15 @@ echo $output;
      if (mysqli_num_rows($result2) >= 0) {
 
       echo "<table cellpadding= 10 border= 1>";
-      
+
      }
       echo "</table>";
       )else {
          echo "<alert> oh no!</alert>"
       }
       */
-    
- 
+
+
 
 
 
@@ -330,7 +331,7 @@ echo $output;
 
       // create query
       $query = "SELECT * FROM Poopypantsdb.Tweets ORDER BY id DESC";
-         
+
     /*  // execute query
       $result = mysqli_query($connection,$query) or die ("Error in query: $query. " . mysql_error());
 
@@ -345,7 +346,7 @@ echo $output;
               echo "<td length= 200 width = 50> <a name='userpage' href='user.php?u=$row[1]'> ". $row[1]."</a></td>";
                     if(userpage == true){
                         $_SESSION['userpage']=$row[1];
-                    } 
+                    }
               echo "<td>".$row[2]."</td>";
           //echo "<td><a href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
                   echo "<td> <a href='google.com'> like </td>";
@@ -354,8 +355,8 @@ echo $output;
           echo "</table>";
        echo "</div>";
           } else {
-      
-        
+
+
         // print status message
         echo "</br>";
           echo "No messages found!";
@@ -365,9 +366,9 @@ echo $output;
    if(mysqli_num_rows($result)>0)
     {
       while($row = mysqli_fetch_row($result)){
-        for ($count=0; $count < mysqli_num_rows($result)/mysqli_num_rows($result); $count++) { 
+        for ($count=0; $count < mysqli_num_rows($result)/mysqli_num_rows($result); $count++) {
          // echo "<table align='center' class='container-fluid' border='1' cellpadding='10'>";
-         
+
          // echo "<tr>";
          // echo "<td width='1000' bgcolor='lightblue'><h3>" .$row[1]."</h3>".$row[2]."</td>";
 
@@ -378,8 +379,8 @@ echo $output;
          // echo "</table>";
          // echo" <br>";
          // echo "<br>";
-          echo "<div class='post'> 
-          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'> 
+          echo "<div class='post'>
+          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'>
           <p class='posttext'>
           <div class='posttext'><a name='userpage' href='user.php?u=$row[1]'>".$row[1]."</a>";
           if(userpage == true){
@@ -401,7 +402,7 @@ echo $output;
 
       }else{
 
-      } 
+      }
 
 function convertHashtags($str){
   $regex = "/[#]/";
@@ -421,7 +422,7 @@ function convertHashtags($str){
          $tweets = $_POST['Message'];
          $User_name = $_POST['User_name'];
          $Hashtags =$_POST['Hashtag'];
-    
+
       // check to see if user has entered anything
           if ($tweets != "") {
       // build SQL query
@@ -431,7 +432,7 @@ function convertHashtags($str){
       // refresh the page to show new update
           echo "<meta http-equiv='refresh' content='0'>";
        }
-    
+
       // if DELETE pressed, set an id, if id is set then delete it from DB
           if (isset($_GET['id'])) {
 
@@ -441,22 +442,22 @@ function convertHashtags($str){
 
       // run the query
          $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
-      
+
       // reset the url to remove id $_GET variable
        $location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
        echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
        exit;
-      
+
       }
-    
+
       // close connection
       mysqli_close($connection);
 
          ?>
-    
+
             <!-- This is the HTML form that appears in the browser -->
-            
-        
+
+
         </body>
         </div>
 

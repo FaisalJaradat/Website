@@ -2,21 +2,21 @@
 
 
 
- require("common.php"); 
-    
-    if(empty($_SESSION['user'])) { 
-  
-      // If they are not, we redirect them to the login page. 
+ require("common.php");
+
+    if(empty($_SESSION['user'])) {
+
+      // If they are not, we redirect them to the login page.
       $location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
       echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
       //exit;
-         
-          // Remember that this die statement is absolutely critical.  Without it, 
-          // people can view your members-only content without logging in. 
-          die("Redirecting to login.php"); 
-      } 
 
-    
+          // Remember that this die statement is absolutely critical.  Without it,
+          // people can view your members-only content without logging in.
+          die("Redirecting to login.php");
+      }
+
+
     // To access $_SESSION['user'] values put in an array, show user his username
 
       $arr = array_values($_SESSION['user']);
@@ -98,7 +98,7 @@ $(document).ready(function() {
     });
 </script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <nav class="navbar navbar-fixed-top animate" style="height:50px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -116,8 +116,7 @@ $(document).ready(function() {
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li ><a href="http://localhost:8888/Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Unsigned</a></li>
-        <li class="dropdown">
+        <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle center navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" > Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li class="dropdown-menu" aria-labelledby="dropdownMenu3"><a href="#"></a> hi</li>
@@ -126,12 +125,12 @@ $(document).ready(function() {
             <li role="separator" class="divider"></li>
             <li><a href="#">Separated link</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+            <li><a href="#">One more separated link</a></li> -->
           </ul>
         </li>
       </ul>
       <form class="navbar-form navbar-left" method="post" action="search.php">
-      
+
 
         <div class="form-group">
           <input method= "post" action = "search.php" type="text" name="Searchq" class="form-control" placeholder="Search for messages...">
@@ -202,9 +201,9 @@ Coders:
 <br>
 
 <h3>
-Faisal Jaradat:    
+Faisal Jaradat:
 <br>
-<img src="https://scontent-yyz1-1.xx.fbcdn.net/v/t1.0-9/1385840_595176433876009_2047002029_n.jpg?oh=a187d4d4aa984b041b07ad5485f74342&oe=59792AD8" width='500' length='500'> 
+<img src="https://scontent-yyz1-1.xx.fbcdn.net/v/t1.0-9/1385840_595176433876009_2047002029_n.jpg?oh=a187d4d4aa984b041b07ad5485f74342&oe=59792AD8" width='500' length='500'>
 
 
 
@@ -276,5 +275,5 @@ If we make any material changes to this Privacy Policy, we will notify you eithe
 
 
       </P>
-      
+
 </div>

@@ -1,3 +1,27 @@
+<?php
+
+require("common.php");
+	$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
+	if(empty($_SESSION['user'])) {
+
+		// If they are not, we redirect them to the login page.
+		$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
+		echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+		//exit;
+
+				// Remember that this die statement is absolutely critical.  Without it,
+				// people can view your members-only content without logging in.
+				die("Redirecting to login.php");
+	}
+	$arr = array_values($_SESSION['user']);
+?>
+
+
+
+
+
+
+
 <html>
 	<head>
     <title> Jist</title>
@@ -37,7 +61,7 @@ position: relative;
       padding-left: 5px;
     }.posttext{
 text-align: left;
-text-align top: 
+text-align top:
 position : relative;
 top: -5px;
 }.postbottom{
@@ -91,7 +115,7 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
     $('#box').focus(function()
-{ 
+{
 $(this).animate({
     width: '150px'
   }, 500, function() {
@@ -101,7 +125,7 @@ $(this).animate({
 
 
 $('#box').blur(function()
-{ 
+{
 $(this).animate({
      width: '100px'
    }, 500, function() {
@@ -140,8 +164,8 @@ $(document).ready(function() {
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li ><a href="http://localhost:8888/Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Unsigned</a></li>
-        <li class="dropdown">
+
+        <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle center navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" > Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li class="dropdown-menu" aria-labelledby="dropdownMenu3"><a href="#"></a> hi</li>
@@ -150,12 +174,12 @@ $(document).ready(function() {
             <li role="separator" class="divider"></li>
             <li><a href="#">Separated link</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+            <li><a href="#">One more separated link</a></li> -->
           </ul>
         </li>
       </ul>
       <form class="navbar-form navbar-left" method="post" action="search.php">
-      
+
 
         <div class="form-group">
           <input method= "post" action = "search.php" type="text" name="Searchq" class="form-control" placeholder="Search for messages...">
@@ -174,29 +198,14 @@ $(document).ready(function() {
    <br>
    <br>
    <br>
-    
-	<?php
 
-	require("common.php"); 
-		$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
-		if(empty($_SESSION['user'])) { 
-  
-			// If they are not, we redirect them to the login page. 
-			$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
-			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-			//exit;
-         
-        	// Remember that this die statement is absolutely critical.  Without it, 
-        	// people can view your members-only content without logging in. 
-        	die("Redirecting to login.php"); 
-    } 
-  ?>
+
 
 	</body>
 
 <?php
 
-  
+
 
 ?>
 <div class="Profile">
@@ -206,24 +215,24 @@ $arr = array_values($_SESSION['user']);
     echo "! </h1>";
 ?>
 
-  
+
 </div>
-<?php 
+<?php
  echo "<div class='center'>";
     echo " $arr[1]" ."'s recent Posts ";
     echo "</div>";
 $query = "SELECT * FROM Poopypantsdb.Tweets WHERE User_name ='$arr[1]'";
 
 
-       
+
     // execute query
     $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysqli_error());
 if(mysqli_num_rows($result)>0)
     {
       while($row = mysqli_fetch_row($result)){
-        for ($count=0; $count < mysqli_num_rows($result)/mysqli_num_rows($result); $count++) { 
+        for ($count=0; $count < mysqli_num_rows($result)/mysqli_num_rows($result); $count++) {
          // echo "<table align='center' class='container-fluid' border='1' cellpadding='10'>";
-         
+
          // echo "<tr>";
          // echo "<td width='1000' bgcolor='lightblue'><h3>" .$row[1]."</h3>".$row[2]."</td>";
 
@@ -234,10 +243,10 @@ if(mysqli_num_rows($result)>0)
          // echo "</table>";
          // echo" <br>";
          // echo "<br>";
-          echo "<div class='post'> 
-          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'> 
+          echo "<div class='post'>
+          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'>
           <p class='posttext'>
-          <div class='posttext'>".$row[1]." "; ?> 
+          <div class='posttext'>".$row[1]." "; ?>
 
            <div class="btn-group pull-right">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -245,8 +254,10 @@ if(mysqli_num_rows($result)>0)
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <ul class="dropdown-menu">
-    <li><a href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></li>
-    
+		<?php
+  //  <li><a href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></li>
+		echo "<li><a href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></li>";
+?>
   </ul>
 </div>
 
@@ -257,7 +268,7 @@ if(mysqli_num_rows($result)>0)
           </p>
           </br>"
           .$row[2].
-          "</div><div class='postbottom'> Tags: ".$row[3]."</div>";
+          "</div><div class='postbottom'> Tags: #".convertHashtags($row[3])."</div>";
 
           ;
 
@@ -270,6 +281,13 @@ if(mysqli_num_rows($result)>0)
 
 
       }
+			function convertHashtags($str){
+			  $regex = "/[#]/";
+			  $str = preg_replace($regex, '', $str);
+
+
+			  return($str);
+			}
     // see if any rows were returned
    /* if (mysqli_num_rows($result) > 0) {
 
@@ -288,8 +306,8 @@ if(mysqli_num_rows($result)>0)
         echo "</table>";
       echo "</div>";
     } else {
-      
-        
+
+
         // print status message
         echo "</br>";
           echo "No messages found!";
@@ -304,7 +322,7 @@ if(mysqli_num_rows($result)>0)
 
       // run the query
          $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
-      
+
       // reset the url to remove id $_GET variable
        $location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
        echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
@@ -312,7 +330,7 @@ if(mysqli_num_rows($result)>0)
      }
 ?>
 
- 
+
 
 
 

@@ -1,3 +1,26 @@
+<?php
+require("common.php");
+$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
+if(empty($_SESSION['user'])) {
+
+	// If they are not, we redirect them to the login page.
+	$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
+
+	echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+	//exit;
+
+			// Remember that this die statement is absolutely critical.  Without it,
+			// people can view your members-only content without logging in.
+			die("Redirecting to login.php");
+
+		}
+$arr = array_values($_SESSION['user']);
+
+ ?>
+
+
+
+
 <html>
 		<head>
 	<style>
@@ -22,7 +45,7 @@
       padding-left: 5px;
     }.posttext{
 text-align: left;
-text-align top: 
+text-align top:
 position : relative;
 top: -5px;
 }.postbottom{
@@ -37,7 +60,7 @@ top: -5px;
     width:50%;
     font-family: Tahoma;
     background: lightgray;
-    
+
   }.animate {
     -webkit-animation: animate_bg 20s;
     animation: animate_bg 20s;
@@ -78,7 +101,7 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
     $('#box').focus(function()
-{ 
+{
 $(this).animate({
     width: '150px'
   }, 500, function() {
@@ -88,7 +111,7 @@ $(this).animate({
 
 
 $('#box').blur(function()
-{ 
+{
 $(this).animate({
      width: '100px'
    }, 500, function() {
@@ -118,9 +141,9 @@ $(this).animate({
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="http://localhost:8888/Profile.php">Profile <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Unsigned</a></li>
-        <li class="dropdown">
+          <li ><a href="http://localhost:8888/Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
+
+        <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle center navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" > Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li class="dropdown-menu" aria-labelledby="dropdownMenu3"><a href="#"></a> hi</li>
@@ -129,12 +152,12 @@ $(this).animate({
             <li role="separator" class="divider"></li>
             <li><a href="#">Separated link</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+            <li><a href="#">One more separated link</a></li> -->
           </ul>
         </li>
       </ul>
       <form class="navbar-form navbar-left" method="post" action="search.php">
-      
+
 
         <div class="form-group">
           <input method= "post" action = "search.php" type="text" name="Searchq" class="form-control" placeholder="Search for messages...">
@@ -143,7 +166,7 @@ $(this).animate({
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
+        <li><a href="http://localhost:8888/Aboutus.php">About us</a></li>
         <li action="logout.php" method="post" style="top:-8px;"><a href="logout.php" style="height:58px;"><button class= "btn btn-default" method="post" style="50px">Logout</button></a></li>
 
       </ul>
@@ -155,48 +178,35 @@ $(this).animate({
 <br>
 <?php
 
-		require("common.php"); 
-		$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
-		if(empty($_SESSION['user'])) { 
-  
-			// If they are not, we redirect them to the login page. 
-			$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
 
-			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-			//exit;
-         
-        	// Remember that this die statement is absolutely critical.  Without it, 
-        	// people can view your members-only content without logging in. 
-        	die("Redirecting to login.php"); 
-        }
 
         	$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
-        	
+
 
 
          $searchkey = $_SESSION['$searchkey'];
 			$searchkey= $_POST['Searchq'];
 
 	$query2 = "SELECT * FROM Poopypantsdb.Tweets WHERE Message LIKE '%$searchkey%' OR User_name LIKE '%$searchkey%' OR Hashtag LIKE '%$searchkey%' ORDER BY ID DESC";
-	
 
- 	  
- 	 	
- 
+
+
+
+
     // execute query
   	$result2 = mysqli_query($connection,$query2) or die ("Error in query: $query2 ".mysqli_error());
-  	  
+
 
     // see if any rows were returned
-		
+
 
    	 if (mysqli_num_rows($result2) > 0) {
-		
+
       while($row = mysqli_fetch_row($result2)){
-        
-        for ($count=0; $count < mysqli_num_rows($result2)/mysqli_num_rows($result2); $count++) { 
+
+        for ($count=0; $count < mysqli_num_rows($result2)/mysqli_num_rows($result2); $count++) {
          // echo "<table align='center' class='container-fluid' border='1' cellpadding='10'>";
-         
+
          // echo "<tr>";
          // echo "<td width='1000' bgcolor='lightblue'><h3>" .$row[1]."</h3>".$row[2]."</td>";
 
@@ -207,15 +217,15 @@ $(this).animate({
          // echo "</table>";
          // echo" <br>";
          // echo "<br>";
-          echo "<div class='post'> 
-          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'> 
+          echo "<div class='post'>
+          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'>
           <p class='posttext'>
           <div class='posttext'>".$row[1]."
           </div>
           </p>
           </br>"
           .$row[2].
-          "</div><div class='postbottom'> Tags: ".$row[3]."</div>"
+          "</div><div class='postbottom'> Tags: ".convertHashtags($row[3])."</div>"
 
           ;
 
@@ -226,8 +236,14 @@ $(this).animate({
       }else{
         echo "No posts found!";
       }
+			function convertHashtags($str){
+				$regex = "/[#]/";
+				$str = preg_replace($regex, '', $str);
 
-     
+
+				return($str);
+			}
+
   ?>
 
 

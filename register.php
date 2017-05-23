@@ -229,6 +229,7 @@ die();
         // is critical.  The rest of your PHP script will continue to execute and
         // will be sent to the user if you do not die or exit.
         die("Redirecting to login.php");
+        exit;
     }
 
 ?>

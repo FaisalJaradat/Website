@@ -14,6 +14,18 @@ require("common.php");
 				die("Redirecting to login.php");
 	}
 	$arr = array_values($_SESSION['user']);
+  function redirect_to($location)
+{
+    if (!headers_sent($file, $line))
+    {
+        header("Location: " . $location);
+    } else {
+        printf("<script>location.href='%s';</script>", urlencode($location));
+        # or deal with the problem
+    }
+    printf('<a href="%s">Moved</a>', urlencode($location));
+    exit;
+}
 ?>
 
 
@@ -26,9 +38,16 @@ require("common.php");
 	<head>
     <title> Jist</title>
     <link rel="icon" type="image/jpg" href="https://pbs.twimg.com/profile_images/799305782441496576/qzEhaGIL.jpg"/>
-<style>
+<style>.addfriend{
+
+float:right;
+position: relative;
+top: -40px;
+left: -30px;
+}
 .center{
   text-align: center;
+  padding: 0;
 }
 h1{
   text-align: center;
@@ -215,12 +234,113 @@ $arr = array_values($_SESSION['user']);
     echo "! </h1>";
 ?>
 
+  <div class="btn-group pull-right addfriend">
+  <button type="button" class="btn btn-default dropdown-toggle " value="Friend requests"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    
+    <span class="sr-only">Toggle Dropdown</span>
+    Friend requests
+    <span class="caret"></span>
+  </button>
+    
+   <ul class='dropdown-menu ' style="width:250px;">
+    <?php
+  $friendrequests = mysqli_query($connection, "SELECT * FROM Poopypantsdb.friend_requests WHERE user_to='$arr[1]'");
+  if(mysqli_num_rows($friendrequests) == 0){
+    echo "No new friend requests!";
+  }else{
+
+    while($get_row = mysqli_fetch_assoc($friendrequests)){
+      $friendrequestid = $get_row['id'];
+      $user_to= $get_row['user_to'];
+      $user_from = $get_row['user_from'];
+      echo'' . $user_from . ' wants to be friends';
+      ?>
+      <form  method="POST" action="Profile.php">
+        <input type="submit" name="acceptrequest<?php echo $user_from; ?>" value="Accept">
+        <input type="submit" name="Ignorerequest<?php echo $user_from; ?>" value="Ignore">
+
+      </form>
+      <?php
+
+    
+
+  if (isset($_POST['acceptrequest'.$user_from])){
+  
+        $get_friend_check=mysqli_query($connection, "SELECT friend_array from Poopypantsdb.users WHERE username='$arr[1]'"); 
+        $get_friend_row = mysqli_fetch_assoc($get_friend_check);
+        $friend_array =$get_friend_row['friend_array'];
+        $friendArray_explode = explode(",", $friend_array);
+        $friendArray_count = count($friendArray_explode);
+        
+
+        $get_friend_check_friend=mysqli_query($connection, "SELECT friend_array from Poopypantsdb.users WHERE username='$user_from'"); 
+        $get_friend_row_friend = mysqli_fetch_assoc($get_friend_check_friend);
+        $friend_array_friend = $get_friend_row_friend['friend_array'];
+        $friendArray_explode_friend = explode(",", $friend_array_friend);
+        $friendArray_count_friend = count($friendArray_explode_friend);
+
+
+
+        if($friend_array==""){
+          $friendArray_count = count(NULL);
+        }
+
+         if($friend_array_friend==""){
+          $friendArray_count_friend = count(NULL);
+        } 
+        if($friendArray_count == NULL){
+          $add_friend_query = mysqli_query($connection, "UPDATE Poopypantsdb.users SET friend_array=Concat(friend_array, '$user_from') WHERE username='$arr[1]'");
+        }
+      if ($friendArray_count >= 1) {
+          $add_friend_query = mysqli_query($connection, "UPDATE Poopypantsdb.users SET friend_array=Concat(friend_array, ',$user_from') WHERE username='$arr[1]'");
+        }
+         if($friendArray_count_friend == NULL){
+          $add_friend_query_friend = mysqli_query($connection, "UPDATE Poopypantsdb.users SET friend_array=Concat(friend_array, '$user_to') WHERE username='$user_from'");
+        }
+
+
+        if($friendArray_count_friend >= 1){
+          $add_friend_query_friend = mysqli_query($connection,"UPDATE Poopypantsdb.users SET friend_array=Concat(friend_array, ',$user_to') WHERE username='$user_from'");
+        }
+        $delete_request=mysqli_query($connection, "DELETE FROM Poopypantsdb.friend_requests WHERE user_to='$user_to'&& user_from='$user_from'");
+        echo "You are now friends </br>";
+        redirect_to("Profile.php");
+        
+}
+if(isset($_POST['Ignorerequest'.$user_from])){
+   $delete_request=mysqli_query($connection, "DELETE FROM Poopypantsdb.friend_requests WHERE user_to='$user_to'&& user_from='$user_from'");
+
+        echo "request ignored </br>";
+        redirect_to("Profile.php");
+        
+}
+  
+   }
+}
+?>
+  </ul>
+    </div>
 
 </div>
+
 <?php
- echo "<div class='center'>";
-    echo " $arr[1]" ."'s recent Posts ";
-    echo "</div>";
+
+ echo "<div class= 'center'>";
+
+    echo $arr[1];
+    echo "'s recent posts:";
+
+    
+
+
+         
+     echo" </div>";
+
+     
+     
+
+
+      
 $query = "SELECT * FROM Poopypantsdb.Tweets WHERE User_name ='$arr[1]'";
 
 
@@ -268,9 +388,9 @@ if(mysqli_num_rows($result)>0)
           </p>
           </br>"
           .$row[2].
-          "</div><div class='postbottom'> Tags: #".convertHashtags($row[3])."</div>";
+           "</div><div class='postbottom'> Tags: <a href='search.php?s=".convertHashtags($row[3])."'> #". convertHashtags($row[3]) ."</a></div>";
 
-          ;
+          
 
         }
 
@@ -328,6 +448,7 @@ if(mysqli_num_rows($result)>0)
        echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
        exit;
      }
+
 ?>
 
 

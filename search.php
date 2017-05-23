@@ -183,9 +183,26 @@ $(this).animate({
         	$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
 
 
+          $searchkey =="";
+          if($_SESSION['searchkey']==""){
+            if($_POST['Searchq']== ""){
+              if($_GET['s']==""){
 
+              }else{
+                $searchkey = $_GET['s'];
+              }
+            }else{
+              $searchkey= $_POST['Searchq'];
+            }
+
+          }else{
          $searchkey = $_SESSION['$searchkey'];
-			$searchkey= $_POST['Searchq'];
+       }
+         
+			
+      
+      
+
 
 	$query2 = "SELECT * FROM Poopypantsdb.Tweets WHERE Message LIKE '%$searchkey%' OR User_name LIKE '%$searchkey%' OR Hashtag LIKE '%$searchkey%' ORDER BY ID DESC";
 
@@ -199,7 +216,7 @@ $(this).animate({
 
     // see if any rows were returned
 
-
+    if(!$searchkey==""){
    	 if (mysqli_num_rows($result2) > 0) {
 
       while($row = mysqli_fetch_row($result2)){
@@ -220,22 +237,42 @@ $(this).animate({
           echo "<div class='post'>
           <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'>
           <p class='posttext'>
-          <div class='posttext'>".$row[1]."
-          </div>
+          <div class='posttext'>
+
+
+          <a name='userpage' href='user.php?u=$row[1]'>".$row[1]."</a>";
+          if(userpage == true){
+                        $_SESSION['userpage']=$row[1];
+                      }
+
+
+
+
+
+
+  echo "</div>
           </p>
           </br>"
           .$row[2].
-          "</div><div class='postbottom'> Tags: ".convertHashtags($row[3])."</div>"
+          "</div><div class='postbottom'> Tags: <a href='search.php?s=".convertHashtags($row[3])."'> #". convertHashtags($row[3]) ."</a></div>";
 
           ;
 
         }
 
-
-        }
+      }
+        
       }else{
         echo "No posts found!";
       }
+}else{
+  echo "Please enter a searchkey";
+}
+  
+
+
+
+
 			function convertHashtags($str){
 				$regex = "/[#]/";
 				$str = preg_replace($regex, '', $str);

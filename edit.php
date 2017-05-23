@@ -390,7 +390,7 @@ echo $output;
           </p>
           </br>"
           .$row[2].
-          "</div><div class='postbottom'> Tags: #". convertHashtags($row[3]) ."</div>";
+          "</div><div class='postbottom'> Tags: <a href='search.php?s=".convertHashtags($row[3])."'> #". convertHashtags($row[3]) ."</a></div>";
 
         }
 

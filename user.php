@@ -22,7 +22,21 @@
 <html>
 
 	<head>
-<style >.addfriend{
+<style >.bottom{
+  vertical-align: bottom;
+  text-align: right;
+
+
+
+  }.individual{
+  position: static;
+  float: left;
+  height:80px;
+  top: 10px;
+  width:70px;
+  text-align: center;
+
+  }.addfriend{
 
 float:right;
 position: relative;
@@ -56,6 +70,8 @@ border-radius: 5px;
 .addfriend:hover span:after {
   opacity: 1;
   right: 0;
+
+
 }
 
 
@@ -66,7 +82,24 @@ border: 5px outset;
 border-color: darkblue;
 position: relative;
 
-}.post {
+}.friends{
+text-align: left;
+border:2px solid #ddd;
+height: 350px;
+width:350px;
+position: absolute;
+
+
+
+
+  }.headertext{
+    text-align: center;
+    font-size: 20px;
+    position: relative;
+    background-color:#f2f2f2;
+    height: 30px;
+
+    }.post {
       border: 1px solid #ddd;
       border-radius: 2px;
       text-align: center;
@@ -253,18 +286,132 @@ $(document).ready(function() {
 
 
 <div class="Profile">
+
+
+  <?php
+
+  $userpage = $_GET['u'];
+if(isset($_POST['addfriend'])){
+$friend_request = $_POST['addfriend'];
+$user_to = $arr[1];
+$user_from = $userpage;
+
+if($user_to == $userpage){
+
+}else{
+  $create_request = mysqli_query($connection,"INSERT into Poopypantsdb.friend_requests (user_from, user_to) VALUES ('$user_to','$user_from') ");
+  
+}
+
+}else{
+// Do nothing
+}
+
+
+
+
+// $friendsArray = "";
+//      $countFriends = "";
+//      $friendArray12 = "";
+//      $addasfriend = "";
+//      $selectFriendsquery = mysqli_query($connection, "SELECT  friend_array from Poopypantsdb.users where username='$userpage'") or die("not working");
+
+//      $friendRow=mysql_fetch_assoc($selectFriendsquery);
+//      $friendArray = $friendRow['friend_array'];
+//      if($friendArray != ""){
+// echo "hi";
+//       $friendArray = explode(",", $friendArray);
+//       $countFriends = count($friendArray);
+//       $friendArray12 = array_slice($friendArray, 0, 12);
+//      }
+//      $i=0;
+//      if(in_array($userpage, $friendArray)){
+//       $addasfriend = '<input type="submit" name="removefriend" value="Remove friend">';
+//      }else{
+//       $addasfriend = '<input type="submit" name="addfriend" value="Add As friend">';
+//      }
+//      echo $addasfriend;
+
+
+
+
+
+
+  ?>
 <?php
+$friendsArray= "";
+   $countFriends= "";
+   $friendsArray12= "";
+   $addAsFriend="";
+   $selectFriendsQuery = mysqli_query($connection, "SELECT friend_array From Poopypantsdb.users where username='$userpage'");
+   $friendRow= mysqli_fetch_assoc($selectFriendsQuery);
+   $friendArray=$friendRow['friend_array'];
+   if($friendArray != ""){
+    
+      $friendArray = explode(",",$friendArray);
+      $countFriends = count($friendArray);
+      $friendsArray12 = array_slice($friendArray, 0,12);
+   }
+
 echo "<img src='https://ukla.org/images/icons/user-icon.svg' width= '86' height='100' align='left' style='position : absolute; top: -4px; left: 3px;''> ";
+
 		$userpage = $_GET['u'];
 		echo "<h1 class='center'>Welcome to ";
 		echo $userpage;
 		echo "'s Profile!</h1>";
-		echo "<button class= 'addfriend' style=''> <span> <a href=user.php?accept=" . '$_row[id]' . "> add friend </a></span></button>";
-		echo "</div>";
+    if($userpage != $arr[1]){
 
+	 echo "<form method='post' action='user.php?u=$userpage'";
+   
+
+
+   $i=0;
+   if (in_array($arr[1], $friendArray)){
+    $addAsFriend = '<input class = "addfriend" type="submit" name="removefriend" value= "Remove friend">';
+   }else{
+    $addAsFriend = '<input class = "addfriend" type="submit" name="addfriend" value= "Add Friend">';
+   }
+     echo" <span>";
+   echo $addAsFriend;
+    echo"<span>";
+    echo"</form>";
+
+  }else{
+    
+  }
+
+		echo "</div>";
 
 $query = "SELECT * FROM Poopypantsdb.Tweets WHERE User_name ='$_GET[u]'";
  $result = mysqli_query($connection,$query) or die ("Error in query: $query ".mysqli_error());
+ echo "<div class='friends'>";
+ echo "<div class='headertext'>";
+ echo $userpage;
+ echo "'s Friends";
+ echo " (";
+  echo $countFriends;
+  echo ")";
+ echo "</div>";
+
+if($countFriends != 0){
+foreach ($friendsArray12 as $key => $value){
+$i++;
+$getFriendQuery = mysqli_query($connection, " SELECT * FROM Poopypantsdb.users WHERE username ='$value' LIMIT 1");
+$getfriendrow = mysqli_fetch_assoc($getFriendQuery);
+$friendUsername= $getfriendrow['username'];
+
+echo "<div class='individual'>";
+echo"<div class='top center'>";
+echo $friendUsername; 
+echo "</div>";
+echo "<a href='user.php?u=$friendUsername'> <img class='bottom center' src='https://ukla.org/images/icons/user-icon.svg' width='50px' align='center' /> </a>";
+echo "</div>";
+}
+
+}else{
+  echo "No friends to show!";
+}
+echo "</div>";
 if(mysqli_num_rows($result)>0)
     {
       while($row = mysqli_fetch_row($result)){
@@ -281,10 +428,11 @@ if(mysqli_num_rows($result)>0)
          // echo "</table>";
          // echo" <br>";
          // echo "<br>";
-          echo "<div class='post'>
-          <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'>
-          <p class='posttext'>
-          <div class='posttext'>".$row[1]." "; ?>
+          echo "<div class='post'>";
+
+         echo" <img src='https://ukla.org/images/icons/user-icon.svg' width= '50' height='50' align='left'>";
+          echo"<p class='posttext'>";
+         echo" <div class='posttext'>".$row[1]." "; ?>
           	<?php
        echo"   </div>
           </p>
@@ -303,7 +451,6 @@ if(mysqli_num_rows($result)>0)
 
 
       }
-
 
 
 

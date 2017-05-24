@@ -227,13 +227,13 @@ $(document).ready(function() {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://localhost:8888/edit.php#">Home</a>
+      <a class="navbar-brand" href="edit.php#">Home</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="http://localhost:8888/Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
+        <li ><a href="Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
 
         <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle center navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" > Dropdown <span class="caret"></span></a>
@@ -258,7 +258,7 @@ $(document).ready(function() {
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="http://localhost:8888/Aboutus.php">About us</a></li>
+        <li><a href="Aboutus.php">About us</a></li>
         <li action="logout.php" method="post" style="top:-8px;"><a href="logout.php" style="height:58px;"><button class= "btn btn-default" method="post" style="50px">Logout</button></a></li>
 
       </ul>
@@ -367,7 +367,7 @@ echo "<img src='https://ukla.org/images/icons/user-icon.svg' width= '86' height=
 
    $i=0;
    if (in_array($arr[1], $friendArray)){
-    $addAsFriend = '<input class = "addfriend" type="submit" name="removefriend" value= "Remove friend">';
+    $addAsFriend = "<input class = 'addfriend' type='submit' name='removefriend' value= 'Already friends!'>";
    }else{
     $addAsFriend = '<input class = "addfriend" type="submit" name="addfriend" value= "Add Friend">';
    }
@@ -411,6 +411,15 @@ echo "</div>";
 }else{
   echo "No friends to show!";
 }
+
+
+
+
+
+
+
+
+
 echo "</div>";
 if(mysqli_num_rows($result)>0)
     {

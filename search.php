@@ -23,7 +23,24 @@ $arr = array_values($_SESSION['user']);
 
 <html>
 		<head>
-	<style>
+	<style>.usersfound{
+    border: 1px solid #ddd;
+      border-radius: 2px;
+      text-align: center;
+      margin: auto;
+      margin-bottom: 0px;
+      margin-top: 0px;
+      width: 50%;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      background: lightgray;
+      font-family: Tahoma;
+      padding-top: 1px;
+      z-index: 100;
+      padding-left: 5px;
+      height: 95px;
+  }
 
 	.Table{
 		text-align: center;
@@ -135,13 +152,13 @@ $(this).animate({
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://localhost:8888/edit.php#">Home</a>
+      <a class="navbar-brand" href="edit.php">Home</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-          <li ><a href="http://localhost:8888/Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
+          <li ><a href="Profile.php"><?php  echo  $arr[1];  ?><span class="sr-only">(current)</span></a></li>
 
         <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle center navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" > Dropdown <span class="caret"></span></a>
@@ -166,7 +183,7 @@ $(this).animate({
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="http://localhost:8888/Aboutus.php">About us</a></li>
+        <li><a href="Aboutus.php">About us</a></li>
         <li action="logout.php" method="post" style="top:-8px;"><a href="logout.php" style="height:58px;"><button class= "btn btn-default" method="post" style="50px">Logout</button></a></li>
 
       </ul>
@@ -205,23 +222,27 @@ $(this).animate({
 
 
 	$query2 = "SELECT * FROM Poopypantsdb.Tweets WHERE Message LIKE '%$searchkey%' OR User_name LIKE '%$searchkey%' OR Hashtag LIKE '%$searchkey%' ORDER BY ID DESC";
-
+  $query3 = "SELECT * FROM Poopypantsdb.users WHERE username LIKE '%$searchkey%'";
 
 
 
 
     // execute query
-  	$result2 = mysqli_query($connection,$query2) or die ("Error in query: $query2 ".mysqli_error());
-
+  	$result2 = mysqli_query($connection,$query2) or die ("error occured with query!");
+    $result3 =mysqli_query($connection, $query3) or die ("error occured with query");
 
     // see if any rows were returned
+echo "<h3 style='font-family:Tahoma; text-align:center;'>";
 
+            echo "Posts found";
+            echo "</h3>";
     if(!$searchkey==""){
    	 if (mysqli_num_rows($result2) > 0) {
 
       while($row = mysqli_fetch_row($result2)){
 
         for ($count=0; $count < mysqli_num_rows($result2)/mysqli_num_rows($result2); $count++) {
+          
          // echo "<table align='center' class='container-fluid' border='1' cellpadding='10'>";
 
          // echo "<tr>";
@@ -241,6 +262,7 @@ $(this).animate({
 
 
           <a name='userpage' href='user.php?u=$row[1]'>".$row[1]."</a>";
+
           if(userpage == true){
                         $_SESSION['userpage']=$row[1];
                       }
@@ -264,7 +286,33 @@ $(this).animate({
         
       }else{
         echo "No posts found!";
+}if(!$searchkey==""){
+
+echo "<h3 style='font-family:Tahoma; text-align:center;'>";
+
+            echo "Users found:";
+            echo "</h3>";
+
+      }if(mysqli_num_rows($result3)> 0){
+        while ($row = mysqli_fetch_row($result3)){
+          for($usercount=0; $usercount <mysqli_num_rows($result3); $usercount++){
+            
+            echo "<div class='usersfound'>";
+
+           echo" <img src='https://ukla.org/images/icons/user-icon.svg' width= '70' height='90' align='left'>";
+
+         echo" <h2 style='left:-20px;'> <a name='userpage' href='user.php?u=$row[1]'>".$row[1]."</a> </h2>";
+
+
+
+
+            echo "</div>";
+          }
+        }
+      }else{
+        echo "no users found";
       }
+
 }else{
   echo "Please enter a searchkey";
 }
